@@ -1,0 +1,40 @@
+{% extends "EcommerceApp/base.html" %}   <!-- Hereda del pader (base.html) -->
+
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div style="float:right;">
+        {% if request.user.is_authenticated %}
+            {% include "CarroApp/widget.html" %}
+        {% else %}
+            <div class="alert alert-danger text-center">
+                Login para ver carro
+            </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        {% for producto in Productos %}
+            <div class="col-md-3">
+                <div class="card" style="width: 100%; margin: 5px 5px;">
+                    <img src="{{producto.Imagen.url}}" class="card-img-top">
+                    <div class="card-body" style="text-align: center;">
+                        <h6 class="card-title">
+                            {{producto.Nombre}}
+                        </h6>
+                        <p class="card-body">
+                            ${{producto.Precio}}
+                        </p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="{% url 'CarroApp:Agregar' producto.id %}" class="btn btn-success">
+                            Agregar al carro
+                        </a>
+                    </div>                    
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

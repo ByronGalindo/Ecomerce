@@ -1,0 +1,41 @@
+{% extends "EcommerceApp/base.html" %}   <!-- Hereda del pader (base.html) -->
+
+{% load static %}
+
+{% block content %}
+
+    <div class="contenedorFormularioContacto">
+
+        {% if "check" in request.GET %}
+            <div style="color: white;">
+                <h1>
+                    Gracias!
+                </h1>
+                <h2>
+                    La información se ha recibido de forma exitosa!
+                </h2>
+            </div>
+        {% endif %}
+
+        {% if "failed" in request.GET %}
+        <div style="color: white;">
+            <h1>
+                Upsss!
+            </h1>
+            <h2>
+                La información no se ha podido enviar!
+            </h2>
+        </div>
+        {% endif %}
+
+        <form action="" method="POST"> {% csrf_token %}
+
+            <table class="contenedorTablaContacto">
+                {{Formulario.as_table}}
+            </table>
+            <input type="submit" value="Enviar" style="width: 150px;">
+
+        </form>
+    </div>
+    
+{% endblock %}

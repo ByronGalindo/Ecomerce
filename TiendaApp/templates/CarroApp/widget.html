@@ -1,0 +1,68 @@
+<table class="table table-bordered" style="color: white;">
+    <thead>
+        <tr>
+            <th colspan="3" class="text-center">
+                Carro de Compras
+            </th>
+        </tr>    
+        <tr>
+            <th>
+                Producto
+            </th>
+            <th>
+                Cantidad
+            </th>
+            <th>
+                Subtotal
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if  request.session.carro.items %}
+            {% for key, value in request.session.carro.items %}
+                <tr class="text-center">
+                    <td>
+                        {{value.Nombre}}
+                    </td>
+                    <td>
+                        {{value.Cantidad}}
+                    </td>
+                    <td>
+                        <a href="{% url 'CarroApp:Agregar' value.Producto_id %}" class="btn btn-sm btn-success"> 
+                            +
+                        </a>
+                        ${{value.Precio}}
+                        <a href="{% url 'CarroApp:Restar' value.Producto_id %}" class="btn btn-sm btn-success"> 
+                            -
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+        {% else %}
+            <tr>
+                <td colspan="3">
+                    <div class="alert alert-danger text-center">
+                        Aun no has agregado prodcutos
+                    </div>
+                </td>
+            </tr>
+        {% endif %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">
+                Total: ${{Importe_Total_Carro}}
+            </td>
+        </tr>
+        {% if  request.session.carro.items %}
+            <tr>
+                <td colspan="3" style="text-align: center;">
+                    <a href="{% url 'PedidosApp:ProcesarPedido' %}" class="btn btn-sm btn-success"> 
+                        Comprar
+                    </a>
+                </td>
+            </tr>
+        {% endif %}
+    </tfoot>
+</table>
